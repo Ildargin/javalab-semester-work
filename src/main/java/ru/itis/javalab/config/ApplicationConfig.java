@@ -42,7 +42,7 @@ public class ApplicationConfig {
         return new HikariDataSource(hikariConfig());
     }
 
-    @Bean // создали bean с id = objectMapper
+    @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
@@ -62,7 +62,7 @@ public class ApplicationConfig {
     public FreeMarkerViewResolver freemarkerViewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
         resolver.setPrefix("");
-        resolver.setSuffix(".ftlh");
+        resolver.setSuffix(".ftl");
         resolver.setContentType("text/html;charset=UTF-8");
         return resolver;
     }

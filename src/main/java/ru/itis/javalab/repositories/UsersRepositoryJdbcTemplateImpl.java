@@ -18,20 +18,11 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    //language=SQL
-    private static final String SQL_SELECT_BY_ID = "select * from account where id = ?";
 
-    //language=SQL
-    private static final String SQL_SELECT_ALL_WITH_PAGES = "select * from account order by id limit :limit offset :offset ;";
-
-    //language=SQL
-    private static final String SQL_SELECT_ALL = "select * from account";
-
-    //language=SQL
-    private static final String SQL_INSERT_USER = "insert into account(first_name, last_name) values (?, ?)";
-
-    //language=SQL
-    private static final String SQL_SELECT_BY_AGE = "select * from account where age = ?";
+    private static final String SQL_SELECT_BY_ID = "select * from user where id = ?";
+    private static final String SQL_SELECT_ALL_WITH_PAGES = "select * from user order by id limit :limit offset :offset ;";
+    private static final String SQL_SELECT_ALL = "select * from user";
+    private static final String SQL_INSERT_USER = "insert into user(first_name, last_name) values (?, ?)";
 
     private RowMapper<User> userRowMapper = (row, i) -> User.builder()
             .id(row.getLong("id"))
@@ -43,11 +34,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
-    @Override
-    public List<User> findAllByAge(Integer age) {
-        return jdbcTemplate.query(SQL_SELECT_BY_AGE, userRowMapper, age);
     }
 
     @Override
