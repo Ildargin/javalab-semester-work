@@ -1,0 +1,24 @@
+header {
+  padding: 25px 0;
+}
+
+header > .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__nav {
+  margin: auto 0;
+}
+
+.header__nav__item {
+  text-decoration: none;
+  color: white;
+  margin: 0 10px;
+  transition: 0.3s ease;
+}
+
+.header__nav > a:hover {
+  color: var(--prime-bg);
+  margin: 0 8px;
+}

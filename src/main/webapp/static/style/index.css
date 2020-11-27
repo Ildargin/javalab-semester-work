@@ -1,0 +1,54 @@
+:root {
+  --primary-font: 'Open Sans';
+  --secondary-font: 'Montserrat';
+  --color-text-11: #dad8de;
+  --color-background-6: #201c2b;
+  --color-background-7: #392e5c;
+  --color-background-8: #2b2d35;
+  --primary-color: #2f2f2f;
+  --second-color: #757575;
+  --second-color-2: #969494;
+  --second-color-3: #686868;
+  --third-color: #d5d5d5;
+  --fourth-color: #f5f5f5;
+  --fifth-color: #7f00ac;
+  --black-color: #000;
+  --white-color: #fff;
+  --prime-bg: #5d38db;
+  --placeholder: #9d9d9d;
+  --sixth-color: #f34a4a;
+  --seventh-color: #00da4a;
+  --eighth-color: #dddddd;
+}
+
+body {
+  background-color: var(--color-background-6);
+  color: white;
+  font-family: var(--primary-font);
+}
+
+main {
+  padding: 100px 0;
+  margin: 0 auto;
+  background-color: var(--color-background-8);
+}
+
+.active {
+  color: var(--color-text-11) !important;
+  text-decoration: underline !important;
+  pointer-events: none;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+  transition: 0.3s ease;
+}
+
+.icon:hover {
+  width: 30px;
+  height: 30px;
+  filter: none;
+}
