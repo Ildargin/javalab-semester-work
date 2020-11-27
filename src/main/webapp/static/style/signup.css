@@ -1,0 +1,13 @@
+#signup,
+#signin {
+  max-width: 500px;
+}
+
+.form__problem {
+  border-radius: 4px;
+  color: var(--sixth-color);
+}
+
+.signup__text-mini {
+  font-size: 0.8rem;
+}
