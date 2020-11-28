@@ -1,0 +1,65 @@
+.user__photo {
+    border-radius: 50%;
+    margin: 10px;
+    height: 35px;
+    width: 35px;
+}
+
+.post {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    min-height: 70px;
+    background-color: var(--post);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.post__left {
+    display: flex;
+    flex-direction: row;
+}
+
+.post__info {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.post__image img {
+    border-radius: 50%;
+    margin: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.post__title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name {
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.email {
+    color: var(--placeholder);
+}
+
+.post__details {
+    height: 100%;
+    display: flex;
+}
+
+.post__details > * {
+    margin: 5px;
+    align-self: center;
+}
+
+@media (max-width: 600px) {
+    .post {
+        flex-direction: column;
+    }
+}

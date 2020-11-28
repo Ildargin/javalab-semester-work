@@ -18,8 +18,11 @@
   --prime-bg: #5d38db;
   --placeholder: #9d9d9d;
   --sixth-color: #f34a4a;
-  --seventh-color: #00da4a;
+  --seventh-color: #54b474;
   --eighth-color: #dddddd;
+  --post: #40326e;
+  --like: #46f07e;
+  --dislike: #ff0000;
 }
 
 body {
@@ -98,4 +101,20 @@ input:focus,
 textarea:focus {
   outline: 0;
   border-color: var(--six-color);
+}
+
+.icon-like:hover {
+  color: var(--like);
+}
+
+.icon-like-active {
+  color: var(--seventh-color);
+}
+
+.icon-dislike:hover {
+  color: var(--dislike);
+}
+
+.icon-dislike-active {
+  color: var(--sixth-color);
 }

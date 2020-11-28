@@ -13,7 +13,6 @@ function submitForm(e) {
   if (!validateEmail(email)) {
     formError('Incorrect email');
   } else {
-    debugger;
     $.ajax({
       type: 'post',
       url: '/signup',
