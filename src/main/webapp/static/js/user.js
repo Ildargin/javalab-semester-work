@@ -1,3 +1,5 @@
+document.getElementById('nav__two').className += ' active';
+
 function changeVotes(text, id) {
   let selector = '#' + id;
   let parent = $(selector);

@@ -4,7 +4,8 @@
         <div class="header__nav">
             <nav class="header__nav">
                 <a class="header__nav__item" id="nav__one" href="/createpost">Create post</a>
-                <a class="header__nav__item" id="nav__two" href="/profile"><img class="user__photo" src="https://picsum.photos/300" alt="U" /></a>
+                <a class="header__nav__item" id="nav__two" href="/user">Main</a>
+                <a class="header__nav__item" id="nav__three" href="/profile"><img class="user__photo" src="https://picsum.photos/300" alt="U" /></a>
             </nav>
         </div>
     </div>

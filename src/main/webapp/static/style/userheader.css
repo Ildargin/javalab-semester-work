@@ -2,6 +2,13 @@ header {
     padding: 25px 0;
 }
 
+.user__photo {
+    border-radius: 50%;
+    margin: 10px;
+    height: 35px;
+    width: 35px;
+}
+
 header > .container {
     display: flex;
     justify-content: space-between;
@@ -12,6 +19,7 @@ header > .container {
 }
 
 .header__nav__item {
+    margin: 0 10px;
     text-decoration: none;
     color: white;
     transition: 0.3s ease;
@@ -20,4 +28,12 @@ header > .container {
 .header__nav > a:hover {
     color: var(--prime-bg);
     margin: 0 8px;
+}
+
+@media (max-width: 400px) {
+    header > .container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
 }
