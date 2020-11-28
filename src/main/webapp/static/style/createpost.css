@@ -1,0 +1,19 @@
+.create__input {
+  height: 30px;
+  margin-bottom: 40px;
+}
+
+.info {
+  font-weight: 200;
+  margin: auto 0;
+  border-radius: 20px;
+  padding: 30px;
+  background-color: var(--second-color-3);
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .create {
+    flex-direction: column;
+  }
+}
