@@ -18,25 +18,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
-        return UserDto.from(usersRepository.findAll());
-    }
-
-    @Override
-    public List<UserDto> getAllUsers(int page, int size) {
-        return from(usersRepository.findAll(page, size));
-    }
-
-    @Override
     public void addUser(UserDto userDto) {
         usersRepository.save(User.builder()
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .build());
-    }
-
-    @Override
-    public UserDto getUser(Long userId) {
-        return UserDto.from(usersRepository.findById(userId).orElse(null));
+                .password(userDto.getPassword())
+                .email(userDto.getEmail())
+                .build()
+        );
     }
 }

@@ -19,16 +19,15 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
-    private static final String SQL_SELECT_BY_ID = "select * from user where id = ?";
-    private static final String SQL_SELECT_ALL_WITH_PAGES = "select * from user order by id limit :limit offset :offset ;";
-    private static final String SQL_SELECT_ALL = "select * from user";
-    private static final String SQL_INSERT_USER = "insert into user(first_name, last_name) values (?, ?)";
+    private static final String SQL_SELECT_BY_ID = "select * from users where id = ?";
+    private static final String SQL_SELECT_ALL_WITH_PAGES = "select * from users order by id limit :limit offset :offset ;";
+    private static final String SQL_SELECT_ALL = "select * from users";
+    private static final String SQL_INSERT_USER = "insert into users(email, password) values (?, ?)";
 
     private RowMapper<User> userRowMapper = (row, i) -> User.builder()
             .id(row.getLong("id"))
             .firstName(row.getString("first_name"))
             .lastName(row.getString("last_name"))
-            .age(row.getInt("age"))
             .build();
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -37,12 +36,14 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     }
 
     @Override
-    public Optional<User> findFirstByFirstnameAndLastname(String firstName, String lastName) {
+    public Optional<User> findByFirstnameAndPassword(String firstName, String lastName) {
         return Optional.empty();
     }
 
     @Override
     public List<User> findAll() {
+
+
         return jdbcTemplate.query(SQL_SELECT_ALL, userRowMapper);
     }
 
@@ -64,12 +65,11 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         }
 
         return Optional.ofNullable(user);
-
     }
 
     @Override
     public void save(User entity) {
-        jdbcTemplate.update(SQL_INSERT_USER, entity.getFirstName(), entity.getLastName());
+        jdbcTemplate.update(SQL_INSERT_USER, entity.getEmail(), entity.getPassword());
     }
 
     @Override
