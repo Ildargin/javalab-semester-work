@@ -4,6 +4,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.javalab.models.User;
 
 import javax.sql.DataSource;
@@ -17,7 +19,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+    private PasswordEncoder passwordEncoder;
 
     private static final String SQL_SELECT_BY_ID = "select * from users where id = ?";
     private static final String SQL_SELECT_ALL_WITH_PAGES = "select * from users order by id limit :limit offset :offset ;";
@@ -31,6 +33,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
             .build();
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
+        this.passwordEncoder = new BCryptPasswordEncoder();
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
@@ -63,13 +66,12 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         } catch (EmptyResultDataAccessException e) {
             user = null;
         }
-
         return Optional.ofNullable(user);
     }
 
     @Override
     public void save(User entity) {
-        jdbcTemplate.update(SQL_INSERT_USER, entity.getEmail(), entity.getPassword());
+        jdbcTemplate.update(SQL_INSERT_USER, entity.getEmail(), passwordEncoder.encode(entity.getPassword()));
     }
 
     @Override

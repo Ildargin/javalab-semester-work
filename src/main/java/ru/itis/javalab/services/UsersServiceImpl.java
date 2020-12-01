@@ -1,5 +1,6 @@
 package ru.itis.javalab.services;
 
+import ru.itis.javalab.dto.FormDto;
 import ru.itis.javalab.dto.UserDto;
 import ru.itis.javalab.models.User;
 import ru.itis.javalab.repositories.UsersRepository;
@@ -18,10 +19,19 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public void addUser(UserDto userDto) {
+    public void addUser(FormDto formDto) {
         usersRepository.save(User.builder()
-                .password(userDto.getPassword())
-                .email(userDto.getEmail())
+                .password(formDto.getPassword())
+                .email(formDto.getEmail())
+                .build()
+        );
+    }
+
+    @Override
+    public Boolean validateUser(FormDto formDto) {
+        usersRepository.save(User.builder()
+                .password(formDto.getPassword())
+                .email(formDto.getEmail())
                 .build()
         );
     }

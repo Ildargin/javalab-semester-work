@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.itis.javalab.dto.UserDto;
+import ru.itis.javalab.dto.FormDto;
+
 import ru.itis.javalab.services.UsersService;
 
 @Controller
-public class Signup {
+public class SignupController {
 
     @Autowired
     private UsersService usersService;
@@ -19,8 +20,8 @@ public class Signup {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String addUser(UserDto user) {
-        usersService.addUser(user);
+    public String addUser(FormDto formDto) {
+        usersService.addUser(formDto);
         return "redirect:/success";
     }
 

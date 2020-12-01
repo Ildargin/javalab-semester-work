@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class Success {
-    @RequestMapping(value = "/success", method = RequestMethod.GET)
-    public String getMainPage() {
-        return "success";
+public class CreatePostController {
+    @RequestMapping(value = "/createpost", method = RequestMethod.GET)
+    public String getPostPage() {
+        return "createpost";
     }
 }

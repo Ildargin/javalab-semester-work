@@ -10,18 +10,14 @@ function submitForm(e) {
   if (!validateEmail(email)) {
     formError('Incorrect email');
   } else {
-    debugger;
     $.ajax({
       type: 'post',
-      url: '/signup',
+      url: '/signin',
       data: {
         email,
         password,
       },
       cache: false,
-      success: () => {
-        window.location.replace('/success');
-      },
     });
     clearForm();
     e.preventDefault();
