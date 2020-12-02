@@ -17,19 +17,23 @@ import java.util.Optional;
 
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
-    private JdbcTemplate jdbcTemplate;
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private PasswordEncoder passwordEncoder;
+    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final PasswordEncoder passwordEncoder;
 
     private static final String SQL_SELECT_BY_ID = "select * from users where id = ?";
     private static final String SQL_SELECT_ALL_WITH_PAGES = "select * from users order by id limit :limit offset :offset ;";
+    private static final String SQL_SELECT_BY_EMAIL = "select * from users where email = ?";
     private static final String SQL_SELECT_ALL = "select * from users";
     private static final String SQL_INSERT_USER = "insert into users(email, password) values (?, ?)";
 
-    private RowMapper<User> userRowMapper = (row, i) -> User.builder()
+
+    private final RowMapper<User> userRowMapper = (row, i) -> User.builder()
             .id(row.getLong("id"))
             .firstName(row.getString("first_name"))
             .lastName(row.getString("last_name"))
+            .password(row.getString("password"))
+            .email(row.getString("email"))
             .build();
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -38,15 +42,10 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    @Override
-    public Optional<User> findByFirstnameAndPassword(String firstName, String lastName) {
-        return Optional.empty();
-    }
+
 
     @Override
     public List<User> findAll() {
-
-
         return jdbcTemplate.query(SQL_SELECT_ALL, userRowMapper);
     }
 
@@ -63,6 +62,18 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         User user;
         try {
             user = jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, userRowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            user = null;
+        }
+        System.out.println(user.getPassword());
+        return Optional.ofNullable(user);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        User user;
+        try {
+            user = jdbcTemplate.queryForObject(SQL_SELECT_BY_EMAIL, userRowMapper, email);
         } catch (EmptyResultDataAccessException e) {
             user = null;
         }
@@ -88,4 +99,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     public void delete(User entity) {
 
     }
+
+
 }

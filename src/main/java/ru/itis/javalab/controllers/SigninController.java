@@ -7,7 +7,9 @@ import ru.itis.javalab.dto.FormDto;
 import ru.itis.javalab.services.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class SigninController {
@@ -21,13 +23,14 @@ public class SigninController {
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public String Signin(FormDto formDto, HttpServletRequest req) {
-        Boolean userExist = usersService.validateUser(formDto);
+    public void getAccess(FormDto formDto, HttpServletRequest req, HttpServletResponse res) throws IOException {
+         Boolean userExist = usersService.validateUser(formDto);
         if (userExist) {
-            return "profile";
-        } else {
-            return "index";
+            HttpSession session = req.getSession(true);
+            session.setAttribute("authenticated", true);
+            res.setStatus(202);
         }
+        res.setStatus(202);
         
     }
 }

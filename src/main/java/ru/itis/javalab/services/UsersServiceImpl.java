@@ -1,11 +1,12 @@
 package ru.itis.javalab.services;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.javalab.dto.FormDto;
-import ru.itis.javalab.dto.UserDto;
 import ru.itis.javalab.models.User;
 import ru.itis.javalab.repositories.UsersRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 import static ru.itis.javalab.dto.UserDto.from;
 
@@ -13,8 +14,10 @@ import static ru.itis.javalab.dto.UserDto.from;
 public class UsersServiceImpl implements UsersService {
 
     private UsersRepository usersRepository;
+    private PasswordEncoder passwordEncoder;
 
     public UsersServiceImpl(UsersRepository usersRepository) {
+        this.passwordEncoder = new BCryptPasswordEncoder();
         this.usersRepository = usersRepository;
     }
 
@@ -29,10 +32,13 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public Boolean validateUser(FormDto formDto) {
-        usersRepository.save(User.builder()
-                .password(formDto.getPassword())
-                .email(formDto.getEmail())
-                .build()
-        );
+        Optional<User> user = usersRepository.findByEmail(formDto.getEmail());
+        if (user.isPresent()) {
+            String dbPassword = user.get().getPassword().trim();
+            return passwordEncoder.matches(formDto.getPassword(), dbPassword);
+        } else {
+            return false;
+        }
+
     }
 }

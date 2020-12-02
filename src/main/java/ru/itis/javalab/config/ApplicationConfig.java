@@ -73,4 +73,5 @@ public class ApplicationConfig {
         configurer.setTemplateLoaderPath("/WEB-INF/ftl/");
         return configurer;
     }
+
 }

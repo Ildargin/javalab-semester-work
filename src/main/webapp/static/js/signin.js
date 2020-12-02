@@ -1,9 +1,9 @@
 document.getElementById('nav__three').className += ' active';
 
 function submitForm(e) {
+  e.preventDefault();
   let email = document.getElementById('email').value;
   let password = document.getElementById('password').value;
-
   if (password.length < 8) {
     formError('Not valid Password');
   }
@@ -18,9 +18,16 @@ function submitForm(e) {
         password,
       },
       cache: false,
+      statusCode: {
+        202: function (response) {
+          window.location.replace('/user');
+        },
+        203: function (response) {
+          window.location.replace('/');
+        },
+      }
     });
     clearForm();
-    e.preventDefault();
   }
 }
 
@@ -40,5 +47,4 @@ function validateEmail(email) {
 function clearForm() {
   document.getElementById('email').value = '';
   document.getElementById('password').value = '';
-  document.getElementById('repassword').value = '';
 }
