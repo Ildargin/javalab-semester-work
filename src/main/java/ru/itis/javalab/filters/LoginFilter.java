@@ -1,43 +1,53 @@
 package ru.itis.javalab.filters;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
-public class LoginFilter implements HandlerInterceptor {
+@WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
+public class LoginFilter implements Filter {
 
-    // This method is called before the controller
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String xHeader = request.getHeader("X-Auth-Token");
-        boolean permission = getPermission(xHeader);
-        if (permission) {
-            return true;
-        } else {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return false;
-            // Above code will send a 401 with no response body.
-            // If you need a 401 view, do a redirect instead of
-            // returning false.
-            // response.sendRedirect("/401"); // assuming you have a handler mapping for 401
+  @Override
+  public void init (FilterConfig filterConfig) throws ServletException {
+  }
 
-        }
-        return false;
-    }
+  @Override
+  public void doFilter (ServletRequest reqest, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+      HttpServletRequest req = (HttpServletRequest) reqest;
+      HttpServletResponse res = (HttpServletResponse) response;
+      HttpSession session = req.getSession(false);
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) throws Exception {
+      Boolean isAuthenticated = false;
+      Boolean sessionExists = session != null;
+      Boolean isUserPage = req.getRequestURI().equals("/user");
+      Boolean isSigninPage = req.getRequestURI().equals("/signin");
+      Boolean isProfilePage = req.getRequestURI().equals("/profile");
+      Boolean isCreatePost = req.getRequestURI().equals("/createpost");
 
-    }
+      if (sessionExists) {
+          isAuthenticated = (Boolean) session.getAttribute("authenticated");
+      }
 
-    @Override
-    public void afterCompletion(HttpServletRequest request,
-                                HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
+      if(isSigninPage){
+          if (isAuthenticated){
+              res.sendRedirect("/user");
+          }
+      }
 
-    }
+      if (isUserPage || isProfilePage || isCreatePost){
+          if (!isAuthenticated) {
+              res.sendRedirect("/");
+          }
+
+      }
+      chain.doFilter(req, res);
+
+  }
+
+  @Override
+  public void destroy () {
+  }
 }
