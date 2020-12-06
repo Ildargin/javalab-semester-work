@@ -20,6 +20,7 @@ public class UserDto {
     private String password;
     private String firstName;
     private String lastName;
+    private String imagePath;
 
     public static UserDto from(User user) {
         if (user == null) {

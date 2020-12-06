@@ -5,9 +5,10 @@ import ru.itis.javalab.dto.UserDto;
 import ru.itis.javalab.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UsersService {
     void addUser(FormDto formDto);
-    Boolean validateUser(FormDto formDto);
+    Optional<User> getUserByForm(FormDto formDto);
 }

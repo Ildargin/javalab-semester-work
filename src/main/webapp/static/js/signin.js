@@ -19,11 +19,11 @@ function submitForm(e) {
       },
       cache: false,
       statusCode: {
-        202: function (response) {
+        200: function (response) {
           window.location.replace('/user');
         },
-        203: function (response) {
-          window.location.replace('/');
+        400: function (response) {
+          window.location.reload(true);
         },
       }
     });

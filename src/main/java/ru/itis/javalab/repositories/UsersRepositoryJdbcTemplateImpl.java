@@ -34,6 +34,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
             .lastName(row.getString("last_name"))
             .password(row.getString("password"))
             .email(row.getString("email"))
+            .imagePath("image_path")
             .build();
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -49,7 +50,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         return jdbcTemplate.query(SQL_SELECT_ALL, userRowMapper);
     }
 
-    @Override
+
     public List<User> findAll(int page, int size) {
         Map<String, Object> params = new HashMap<>();
         params.put("limit", size);
@@ -57,7 +58,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         return namedParameterJdbcTemplate.query(SQL_SELECT_ALL_WITH_PAGES, params, userRowMapper);
     }
 
-    @Override
+
     public Optional<User> findById(Long id) {
         User user;
         try {
@@ -65,7 +66,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         } catch (EmptyResultDataAccessException e) {
             user = null;
         }
-        System.out.println(user.getPassword());
         return Optional.ofNullable(user);
     }
 

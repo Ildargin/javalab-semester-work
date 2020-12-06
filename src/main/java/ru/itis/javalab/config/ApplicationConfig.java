@@ -9,10 +9,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import ru.itis.javalab.repositories.PostsRepository;
+import ru.itis.javalab.repositories.PostsRepositoryJdbcTemplateImpl;
 import ru.itis.javalab.repositories.UsersRepository;
 import ru.itis.javalab.repositories.UsersRepositoryJdbcTemplateImpl;
+import ru.itis.javalab.services.PostsService;
+import ru.itis.javalab.services.PostsServiceImpl;
 import ru.itis.javalab.services.UsersService;
 import ru.itis.javalab.services.UsersServiceImpl;
 
@@ -33,8 +38,23 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public PostsService postsService() {
+        return new PostsServiceImpl(postsRepository());
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bcryptService() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public UsersRepository usersRepository() {
         return new UsersRepositoryJdbcTemplateImpl(dataSource());
+    }
+
+    @Bean
+    public PostsRepository postsRepository() {
+        return new PostsRepositoryJdbcTemplateImpl(dataSource());
     }
 
     @Bean
@@ -73,5 +93,6 @@ public class ApplicationConfig {
         configurer.setTemplateLoaderPath("/WEB-INF/ftl/");
         return configurer;
     }
+
 
 }

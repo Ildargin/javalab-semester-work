@@ -2,8 +2,8 @@ document.getElementById('nav__one').className += ' active';
 
 function submitForm(e) {
   let title = document.getElementById('title').value;
-  let description = document.getElementById('description').value;
-  if (title.length < 10 || description.length < 50) {
+  let text = document.getElementById('text').value;
+  if (title.length < 10 || text.length < 50) {
     alert('follow the rules for post');
   } else{
     $.ajax({
@@ -11,7 +11,7 @@ function submitForm(e) {
       url: '/createpost',
       data: {
         title,
-        description,
+        text
       },
       cache: false,
       success: () => {
@@ -25,5 +25,5 @@ function submitForm(e) {
 
 function clearForm() {
   document.getElementById('title').value = '';
-  document.getElementById('description').value = '';
+  document.getElementById('text').value = '';
 }

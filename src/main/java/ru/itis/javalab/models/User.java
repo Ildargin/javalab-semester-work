@@ -17,4 +17,5 @@ public class User {
     private String lastName;
     private String password;
     private String email;
+    private String imagePath;
 }
