@@ -1,6 +1,7 @@
 package ru.itis.javalab.services;
 
 import ru.itis.javalab.dto.PostDto;
+import ru.itis.javalab.dto.PostShowingDto;
 import ru.itis.javalab.models.Post;
 import ru.itis.javalab.repositories.PostsRepository;
 
@@ -26,7 +27,7 @@ public class PostsServiceImpl implements PostsService {
     }
 
     @Override
-    public List<Post> getAllPosts() {
-        return null;
+    public List<PostShowingDto> getAllPostsWithUsers(){
+        return postRepository.findAllWithUsers();
     }
 }

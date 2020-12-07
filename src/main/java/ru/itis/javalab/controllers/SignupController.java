@@ -16,6 +16,7 @@ public class SignupController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String getMainPage() {
+
         return "signup";
     }
 

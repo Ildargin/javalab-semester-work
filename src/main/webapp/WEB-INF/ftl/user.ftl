@@ -19,38 +19,26 @@
 
 <main class="main">
     <div class="container">
-        <div class="post">
-            <div class="post__left">
-                <div class="post__image"><img src="https://picsum.photos/200" alt="U" /></div>
-                <div class="post__info">
-                    <div class="post__username">
-                        <span class="name" id="name">ildar Gainatullin</span>
-                        <span class="email" id="email">ildar@Gainatullin.gmail.com</span>
-                    </div>
-                    <div class="post__title">
-                        <span class="title" id="title">How to do money</span>
-                    </div>
-                </div>
-            </div>
-            <div class="post__right">
-                <div class="post__details" id="1">
-                    <div class="likes" onclick="changeVotes('like', 1)">
-                        <i class="icofont-thumbs-up icon-like"></i>
-                        <span class="like-count">21</span>
-                    </div>
-                    <div class="dislikes" onclick="changeVotes('dislike', 1)">
-                        <i class="icofont-thumbs-down icon-dislike"></i>
-                        <span class="dislike-count">32 </span>
+        <#list posts as post>
+            <a href="/user/post:${post.id}" class="post">
+                <div class="post__left">
+                    <div class="post__image"><img src="${post.image_path}" alt="U" /></div>
+                    <div class="post__info">
+                        <div class="post__username">
+                            <span class="name" id="name">${(post.firstName)!} ${((post.lastName)!)}
+                            <span class="email" id="email">${post.email}
+                        </div>
+                        <div class="post__title">
+                            <span class="title" id="title">${post.title}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </a>
+        </#list>
     </div>
 </main>
 
 <#include 'footer.ftl'>
 
-<script src="static/lib/jquery/jquery.min.js"></script>
-<script defer src="static/js/user.js"></script>
 </body>
 </html>

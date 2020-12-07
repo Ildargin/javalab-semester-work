@@ -16,10 +16,7 @@ import ru.itis.javalab.repositories.PostsRepository;
 import ru.itis.javalab.repositories.PostsRepositoryJdbcTemplateImpl;
 import ru.itis.javalab.repositories.UsersRepository;
 import ru.itis.javalab.repositories.UsersRepositoryJdbcTemplateImpl;
-import ru.itis.javalab.services.PostsService;
-import ru.itis.javalab.services.PostsServiceImpl;
-import ru.itis.javalab.services.UsersService;
-import ru.itis.javalab.services.UsersServiceImpl;
+import ru.itis.javalab.services.*;
 
 import javax.sql.DataSource;
 

@@ -14,6 +14,13 @@
     background-color: var(--post);
     border-radius: 4px;
     padding: 5px;
+    color: white;
+    text-decoration: none ;
+}
+
+.post:hover {
+    color: white;
+    text-decoration: none;
 }
 
 .post__left {

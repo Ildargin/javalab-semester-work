@@ -21,6 +21,7 @@
     <div class="create container d-flex">
         <div class=" d-flex flex-row col-sm-12 col-md-6 mb-3">
             <div class="info">
+                <h5>Make sure, that you set your first name and last name, if you didnt set it the information about you will not be displayed </h5>
                 <h5>Title must be longer than 10 symbols</h5>
                 <h5>Description must be longer than 50 symbols</h5>
                 <h5>Try to write correctly, observing the rules of grammar, etc.</h5>
