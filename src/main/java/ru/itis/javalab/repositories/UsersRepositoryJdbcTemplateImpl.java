@@ -26,6 +26,8 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private static final String SQL_SELECT_BY_EMAIL = "select * from users where email = ?";
     private static final String SQL_SELECT_ALL = "select * from users";
     private static final String SQL_INSERT_USER = "insert into users(email, password) values (?, ?)";
+    public static final String SQL_UPDATE_USER = "update users set first_name = ? , last_name = ? , birth_date = ? where id = ?";
+
 
 
     private final RowMapper<User> userRowMapper = (row, i) -> User.builder()
@@ -34,7 +36,8 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
             .lastName(row.getString("last_name"))
             .password(row.getString("password"))
             .email(row.getString("email"))
-            .imagePath("image_path")
+            .birthDate(row.getDate("birth_date"))
+            .imagePath(row.getString("image_path"))
             .build();
 
     public UsersRepositoryJdbcTemplateImpl(DataSource dataSource) {
@@ -42,7 +45,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
-
 
 
     @Override
@@ -87,7 +89,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public void update(User entity) {
-
+        jdbcTemplate.update(SQL_UPDATE_USER, entity.getFirstName() , entity.getLastName(), entity.getBirthDate(), entity.getId());
     }
 
     @Override

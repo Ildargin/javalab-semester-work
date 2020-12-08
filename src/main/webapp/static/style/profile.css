@@ -5,6 +5,10 @@
   width: 90%;
 }
 
+#image {
+  height: 100px;
+}
+
 .profile__image {
   display: flex;
   justify-content: center;

@@ -22,7 +22,7 @@
         <#list posts as post>
             <a href="/user/post:${post.id}" class="post">
                 <div class="post__left">
-                    <div class="post__image"><img src="${post.image_path}" alt="U" /></div>
+                    <div class="post__image"><img src="${post.image_path}" alt="UserImage" /></div>
                     <div class="post__info">
                         <div class="post__username">
                             <span class="name" id="name">${(post.firstName)!} ${((post.lastName)!)}

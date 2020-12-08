@@ -5,11 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FormDto {
-    private String email;
-    private String password;
+public class UpdateFormDto {
+    private Long id;
+    private String firstName;
+    private String LastName;
+    private Date birthDate;
 }

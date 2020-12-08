@@ -3,7 +3,7 @@ package ru.itis.javalab.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.itis.javalab.dto.FormDto;
+import ru.itis.javalab.dto.SigninFormDto;
 import ru.itis.javalab.models.User;
 import ru.itis.javalab.services.UsersService;
 
@@ -18,14 +18,14 @@ public class SigninController {
     @Autowired
     private UsersService usersService;
 
-    @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public String getMainPage() {
+    @GetMapping(value = "/signin")
+    public String getSignInPage() {
         return "signin";
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public void getAccess(FormDto formDto, HttpServletRequest req, HttpServletResponse res) {
-        Optional<User> userOptional = usersService.getUserByForm(formDto);
+    @PostMapping("/signin")
+    public void getAccess(SigninFormDto signinFormDto, HttpServletRequest req, HttpServletResponse res) {
+        Optional<User> userOptional = usersService.getUserByForm(signinFormDto);
         if (userOptional.isPresent()) {
             HttpSession session = req.getSession(true);
             session.setAttribute("authenticated", true);

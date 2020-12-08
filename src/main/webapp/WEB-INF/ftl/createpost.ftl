@@ -32,7 +32,7 @@
             <form  class="d-flex flex-column" action="">
                 <label>Set a title</label>
                 <input  minlength="10" class="create__input" id="title" required autocomplete="off"/>
-                <label>Descpition</label>
+                <label>Main text</label>
                 <textarea required name="text" id="text" cols="10" rows="10" maxlength="500" minlength="50"></textarea>
                 <button type="submit" value="submit" class="button button-block mt-5" onclick="submitForm()"/>Post</button>
             </form>

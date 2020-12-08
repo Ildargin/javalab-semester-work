@@ -2,9 +2,9 @@ package ru.itis.javalab.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import ru.itis.javalab.dto.FormDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import ru.itis.javalab.dto.SigninFormDto;
 
 import ru.itis.javalab.services.UsersService;
 
@@ -14,18 +14,17 @@ public class SignupController {
     @Autowired
     private UsersService usersService;
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    @GetMapping("/signup")
     public String getMainPage() {
 
         return "signup";
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String addUser(FormDto formDto) {
-        usersService.addUser(formDto);
+    @PostMapping("/signup")
+    public String addUser(SigninFormDto signinFormDto) {
+        usersService.addUser(signinFormDto);
         return "redirect:/success";
     }
-
 
 }
 

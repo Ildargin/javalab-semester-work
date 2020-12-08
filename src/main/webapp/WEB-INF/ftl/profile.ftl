@@ -23,17 +23,17 @@
             <div class="profile__info">
                 <h1 class="mb-3" >Profile</h1>
                 <div class="profile__image">
-                    <img src="https://picsum.photos/500" alt="profile__photo">
+                    <img src=${(user.imagePath)!"https://picsum.photos/500"} alt="profile__photo">
                 </div>
                 <div class="profile__info__col mt-4 ">
                     <div class="row">
-                        <span>First name: <h5>Ildar</h5></span>
+                        <span>First name: <h5 id="fn">${(user.firstName)!"undefined"}</h5></span>
                     </div>
                     <div class="row">
-                        <span>Last name: <h5>Gainatullin</h5></span>
+                        <span>Last name: <h5 id="ln">${(user.lastName)!"undefined"}</h5></span>
                     </div>
                     <div class="row">
-                        <span>birthdate: <h5>02-07-2003</h5></span>
+                        <span>birthdate: <h5 id="bd">${(user.birthDate)!"undefined"}</h5></span>
                     </div>
                 </div>
             </div>
@@ -47,11 +47,17 @@
                 <input  minlength="3" id="lastname" required autocomplete="off"/>
                 <label class="mt-2" >birth-date</label>
                 <input  type="date" minlength="3" id="birthdate" required autocomplete="off"/>
-                <label class="mt-2">avatar(jpeg, png)</label>
-                <input type="file" name="file" id="file">
-                <label class="mt-5"style="color: lightgray;">**if you want to change your password,</br>
-                    contact with <a href="https://ildargin.com">admin</a></label>
-                <button type="submit" value="submit" class="button button-block mt-5" onclick="subChanges(event)"/>submit changes</button>
+                <label class="mt-2"style="color: lightgray;">
+                    *Fill all the fields for update</br>
+                    **if you want to change your password,</br>
+                    contact with <a href="https://ildargin.com">admin</a>
+                </label>
+                <button type="submit" value="submit" class="button button-block mt-3 mb-5" onclick="UpdateProfile(event)"/>submit changes</button>
+            </form>
+            <form action="">
+                <label class="mt-2">Profile picture (jpeg, png)</label>
+                <input type="file" name="image" id="image">
+                <button type="submit" value="submit" class="button button-block mt-5" onclick="UpdateProfilePic()"/>Update picture</button>
             </form>
         </div>
     </div>

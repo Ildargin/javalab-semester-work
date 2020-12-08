@@ -14,6 +14,4 @@ public class PostDto {
     private Long userId;
     private String text;
     private String title;
-    private Integer likes;
-    private Integer dislikes;
 }

@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @Builder
@@ -18,4 +20,5 @@ public class User {
     private String password;
     private String email;
     private String imagePath;
+    private Date birthDate;
 }
