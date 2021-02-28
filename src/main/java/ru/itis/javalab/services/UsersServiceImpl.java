@@ -1,60 +1,83 @@
 package ru.itis.javalab.services;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.itis.javalab.dto.SigninFormDto;
-import ru.itis.javalab.dto.UpdateFormDto;
-import ru.itis.javalab.dto.UserDto;
-import ru.itis.javalab.models.User;
-import ru.itis.javalab.repositories.UsersRepository;
 
 import java.util.Optional;
+import java.util.UUID;
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import ru.itis.javalab.dto.SignupFormDto;
+import ru.itis.javalab.dto.UpdateFormDto;
+import ru.itis.javalab.models.Email;
+import ru.itis.javalab.models.User;
+import ru.itis.javalab.repositories.UsersRepository;
+import ru.itis.javalab.utils.EmailUtil;
+import ru.itis.javalab.utils.MailsGenerator;
 
-
+@Service
 public class UsersServiceImpl implements UsersService {
 
-    private final UsersRepository  usersRepository;
-    private final PasswordEncoder passwordEncoder;
+  @Autowired
+  private UsersRepository usersRepository;
 
-    public UsersServiceImpl(UsersRepository usersRepository) {
-        this.passwordEncoder = new BCryptPasswordEncoder();
-        this.usersRepository = usersRepository;
-    }
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    @Override
-    public void updateUser(UpdateFormDto updateFormDto) {
-        usersRepository.update(User.builder()
-                .id(updateFormDto.getId())
-                .birthDate(updateFormDto.getBirthDate())
-                .firstName(updateFormDto.getFirstName())
-                .lastName(updateFormDto.getLastName())
-                .build()
-        );
-    }
+  @Autowired
+  private EmailUtil emailUtil;
 
-    @Override
-    public void addUser(SigninFormDto signinFormDto) {
-        usersRepository.save(User.builder()
-                .password(signinFormDto.getPassword())
-                .email(signinFormDto.getEmail())
-                .build()
-        );
-    }
+  @Autowired
+  private MailsGenerator mailsGenerator;
 
-    @Override
-    public Optional<User> getUserById(Long id) {
-        return usersRepository.findById(id);
-    }
+  @Value("${server.url}")
+  private String serverUrl;
 
-    @Override
-    public Optional<User> getUserByForm(SigninFormDto signinFormDto) {
-        Optional<User> userOptional = usersRepository.findByEmail(signinFormDto.getEmail());
-        if(userOptional.isPresent()) {
-            String rawPassword = signinFormDto.getPassword();
-            String encodedPassword = userOptional.get().getPassword();
-            if(passwordEncoder.matches(rawPassword, encodedPassword )){
-                return userOptional;
-            }
-        }
-        return Optional.empty();
+  @Value("${spring.mail.username}")
+  private String from;
+
+  @Override
+  public void updateUser(UpdateFormDto updateFormDto) {
+    usersRepository.update(User.builder()
+        .id(updateFormDto.getId())
+        .birthDate(updateFormDto.getBirthDate())
+        .firstName(updateFormDto.getFirstName())
+        .lastName(updateFormDto.getLastName())
+        .build()
+    );
+  }
+
+  @Override
+  public void addUser(SignupFormDto signupFormDto, HttpSession session) {
+    User newUser = User.builder()
+        .password(signupFormDto.getPassword())
+        .confirmedCode(UUID.randomUUID())
+        .email(signupFormDto.getEmail())
+        .build();
+
+    if (usersRepository.saveUser(newUser)) {
+      session.setAttribute("authenticated", true);
+      String confirmMail = mailsGenerator.getMailForConfirm(serverUrl, newUser.getConfirmedCode().toString());
+      Email email = new Email(from, newUser.getEmail(), "Регистрация", confirmMail);
+      emailUtil.sendMail(email);
     }
+  }
+
+  @Override
+  public Optional<User> getUserById(Long id) {
+    return usersRepository.findById(id);
+  }
+
+  @Override
+  public Optional<User> getUserByForm(SignupFormDto signupFormDto) {
+    Optional<User> userOptional = usersRepository.findByEmail(signupFormDto.getEmail());
+    if (userOptional.isPresent()) {
+      String rawPassword = signupFormDto.getPassword();
+      String encodedPassword = userOptional.get().getPassword();
+      if (passwordEncoder.matches(rawPassword, encodedPassword)) {
+        return userOptional;
+      }
+    }
+    return Optional.empty();
+  }
 }

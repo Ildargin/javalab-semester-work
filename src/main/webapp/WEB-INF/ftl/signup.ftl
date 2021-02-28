@@ -19,15 +19,15 @@
 <main class="main">
     <div class="container">
         <div class="m-auto" id="signup">
-            <h1 class="auth-title text-center">Please sign up to continue</h1>
+            <h1 class="auth-title text-center mb-3">Please sign up to continue</h1>
             <form action="">
                 <label>Set A Email</label>
-                <input class="mb-2" id="email" type="email"required autocomplete="off"/>
+                <input class="mb-2" id="email" type="email" required autocomplete="off"/>
                 <label>Set A Password</label>
-                <input class="mb-1" id="password" type="password"required autocomplete="off"/>
+                <input class="mb-1" id="password" type="password" required autocomplete="off"/>
                 <label>Retype password</label>
                 <input id="repassword" type="password" required autocomplete="off"/>
-                <div class="form__problem mt-3 text-center" id="form__problem " >
+                <div class="form__problem mt-3 text-center" id="form__problem ">
                     <p id="form__problem__msg"></p>
                 </div>
                 <button type="submit" value="submit" class="button button-block mt-5" onclick="submitForm(event)"/>Get Started</button>

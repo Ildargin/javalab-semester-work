@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SuccessController {
-    @GetMapping("/success")
-    public String getMainPage() {
-        return "success";
-    }
+
+  @GetMapping("/success")
+  public String getMainPage() {
+    return "success";
+  }
 }

@@ -1,33 +1,32 @@
 package ru.itis.javalab.services;
 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.itis.javalab.dto.PostDto;
 import ru.itis.javalab.dto.PostShowingDto;
 import ru.itis.javalab.models.Post;
 import ru.itis.javalab.repositories.PostsRepository;
 
-import java.util.List;
-
+@Service
 public class PostsServiceImpl implements PostsService {
 
-    private final PostsRepository postRepository;
-
-    public PostsServiceImpl(PostsRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    @Autowired
+    private PostsRepository postRepository;
 
     @Override
     public void addPost(PostDto postDto) {
         postRepository.save(
-                Post.builder()
-                        .userId(postDto.getUserId())
-                        .title(postDto.getTitle())
-                        .text(postDto.getText())
-                        .build()
+            Post.builder()
+                .userId(postDto.getUserId())
+                .title(postDto.getTitle())
+                .text(postDto.getText())
+                .build()
         );
     }
 
     @Override
-    public List<PostShowingDto> getAllPostsWithUsers(){
+    public List<PostShowingDto> getAllPostsWithUsers() {
         return postRepository.findAllWithUsers();
     }
 }

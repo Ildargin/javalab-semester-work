@@ -1,19 +1,19 @@
 package ru.itis.javalab.repositories;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface CrudRepository<T> {
-    List<T> findAll();
 
-    void save(T entity);
+  List<T> findAll();
 
-    void update(T entity);
+  void save(T entity);
 
-    void deleteById(Long id);
+  void update(T entity);
 
-    void delete(T entity);
+  void deleteById(Long id);
+
+  void delete(T entity);
 
 
 }

@@ -18,8 +18,9 @@
 <main class="main">
     <div class="container d-flex justify-content-center">
         <div class="m-auto" id="signup">
-            <h1 class="auth-title text-center mb-5">Success</h1>
-            <img class="gif" src="https://media.giphy.com/media/aWRWTF27ilPzy/source.gif" alt="gif" />
+            <h1 class="auth-title text-center mb-1">Success</h1>
+            <div class=" text-center mb-3">Please check your email and activate your account before enter</div>
+            <img class="gif" src="https://media.giphy.com/media/aWRWTF27ilPzy/source.gif" alt="gif"/>
         </div>
     </div>
 </main>

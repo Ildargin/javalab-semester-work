@@ -9,6 +9,7 @@ import ru.itis.javalab.services.PostsService;
 
 @Controller
 public class UserController {
+
     @Autowired
     PostsService postsService;
 

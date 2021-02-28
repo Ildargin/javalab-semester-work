@@ -1,12 +1,14 @@
 package ru.itis.javalab.repositories;
 
-import ru.itis.javalab.models.User;
-
-import java.util.List;
 import java.util.Optional;
+import ru.itis.javalab.models.User;
 
 
 public interface UsersRepository extends CrudRepository<User> {
-    Optional<User> findByEmail(String email);
-    Optional<User> findById(Long id);
+
+  Optional<User> findByEmail(String email);
+
+  Optional<User> findById(Long id);
+
+  boolean saveUser(User user);
 }
