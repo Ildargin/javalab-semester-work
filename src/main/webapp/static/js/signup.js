@@ -1,6 +1,7 @@
 document.getElementById('nav__two').className += ' active';
 
 function submitForm(e) {
+  e.preventDefault();
   let email = document.getElementById('email').value;
   let password = document.getElementById('password').value;
   let repassword = document.getElementById('repassword').value;
@@ -21,13 +22,17 @@ function submitForm(e) {
         password,
       },
       cache: false,
-      success: () => {
-        window.location.replace('/success');
-      },
+      statusCode: {
+        200: function (response) {
+          window.location.replace('/success');
+        },
+        400: function (response) {
+          window.location.reload(true);
+        },
+      }
     });
-    clearForm();
-    e.preventDefault();
   }
+  clearForm();
 }
 
 function formError(text) {

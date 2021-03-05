@@ -15,8 +15,7 @@ import ru.itis.javalab.services.UsersService;
 @Controller
 public class SigninController {
 
-  @Autowired
-  private UsersService usersService;
+  @Autowired private UsersService usersService;
 
   @GetMapping(value = "/signin")
   public String getSignInPage() {
@@ -24,7 +23,8 @@ public class SigninController {
   }
 
   @PostMapping("/signin")
-  public void getAccess(SignupFormDto signupFormDto, HttpServletRequest req, HttpServletResponse res) {
+  public void getAccess(
+      SignupFormDto signupFormDto, HttpServletRequest req, HttpServletResponse res) {
     Optional<User> userOptional = usersService.getUserByForm(signupFormDto);
     if (userOptional.isPresent()) {
       HttpSession session = req.getSession(true);

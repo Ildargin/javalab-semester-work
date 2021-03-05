@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<#import "spring.ftl" as spring/>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +21,16 @@
     <div class="container">
         <div class="m-auto" id="signup">
             <h1 class="auth-title text-center mb-3">Please sign up to continue</h1>
-            <form action="">
+            <form action="/signup" method="POST">
+                <label>Email</label>
+                <@spring.formInput "userForm.email"/>
+                <@spring.showErrors "<br>" "error"/>
+                <label for="password">Пароль</label>
+                <@spring.formPasswordInput "userForm.password"/>
+                <@spring.showErrors "<br>" "error"/>
+                <input type="submit" value="Регистрация">
+            </form>
+            <form>
                 <label>Set A Email</label>
                 <input class="mb-2" id="email" type="email" required autocomplete="off"/>
                 <label>Set A Password</label>
@@ -30,7 +40,7 @@
                 <div class="form__problem mt-3 text-center" id="form__problem ">
                     <p id="form__problem__msg"></p>
                 </div>
-                <button type="submit" value="submit" class="button button-block mt-5" onclick="submitForm(event)"/>Get Started</button>
+                <button class="button button-block mt-5" onclick="submitForm()"/>Get Started</button>
                 <div class="signup__text-mini mt-2 text-center">
                     <span class=" " >Already registred? <a href="/signin"> Sign in </a></span>
                 </div>

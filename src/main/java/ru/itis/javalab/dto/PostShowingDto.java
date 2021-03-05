@@ -1,6 +1,5 @@
 package ru.itis.javalab.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PostShowingDto {
-    private Integer id;
-    private String text;
-    private String title;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String image_path;
+  private Long id;
+  private String text;
+  private String title;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String image_path;
 }

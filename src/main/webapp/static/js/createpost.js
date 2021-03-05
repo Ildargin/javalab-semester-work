@@ -15,7 +15,7 @@ function submitForm(e) {
       },
       cache: false,
       success: () => {
-        window.location.replace('/success');
+        alert("post succesfully added");
       },
     });
   }

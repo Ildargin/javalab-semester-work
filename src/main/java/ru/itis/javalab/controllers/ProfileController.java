@@ -18,8 +18,7 @@ import ru.itis.javalab.services.UsersService;
 @Controller
 public class ProfileController {
 
-  @Autowired
-  private UsersService usersService;
+  @Autowired private UsersService usersService;
 
   @GetMapping("/profile")
   public String getProfilePage(Model model, HttpSession session) {
@@ -29,24 +28,30 @@ public class ProfileController {
   }
 
   @PostMapping("/profile")
-  public void updateProfilePage(UpdateFormDto updateFormDto, HttpServletRequest req, HttpServletResponse res) {
-    HttpSession session = req.getSession(false);
+  public void updateProfilePage(
+      UpdateFormDto updateFormDto,
+      HttpServletRequest req,
+      HttpServletResponse res,
+      HttpSession session) {
     User user = (User) session.getAttribute("user");
-    Long userId = user.getId();
-    updateFormDto.setId(userId);
-    usersService.updateUser(updateFormDto);
-    Optional<User> userUpdated = usersService.getUserById(userId);
-    if (userUpdated.isPresent()) {
-      session.setAttribute("user", userUpdated.get());
-      res.setStatus(200);
-    } else {
+    if (user == null) {
       res.setStatus(400);
+    } else {
+      Long userId = user.getId();
+      updateFormDto.setId(userId);
+      usersService.updateUser(updateFormDto);
+      Optional<User> userUpdated = usersService.getUserById(userId);
+      if (userUpdated.isPresent()) {
+        session.setAttribute("user", userUpdated.get());
+        res.setStatus(200);
+      } else {
+        res.setStatus(400);
+      }
     }
   }
 
   @PostMapping("/profile/updateimage")
   public void updateProfileImage(@RequestParam CommonsMultipartFile file, HttpSession session) {
-
+    //    TODO: method
   }
-
 }

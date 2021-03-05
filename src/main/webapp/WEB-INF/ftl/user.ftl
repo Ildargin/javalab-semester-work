@@ -22,14 +22,14 @@
         <#list posts as post>
             <a href="/user/post:${post.id}" class="post">
                 <div class="post__left">
-                    <div class="post__image"><img src="${post.image_path}" alt="UserImage" /></div>
+                    <div class="post__image"><img src="${(post.image_path)!"https://kpfu.ru/docs/F752281111/img2011808431.jpg"}" alt="UserImage" /></div>
                     <div class="post__info">
                         <div class="post__username">
                             <span class="name" id="name">${(post.firstName)!} ${((post.lastName)!)}
-                            <span class="email" id="email">${post.email}
+                            <span class="email" id="email">${(post.email)!}
                         </div>
                         <div class="post__title">
-                            <span class="title" id="title">${post.title}
+                            <span class="title" id="title">${(post.title)!}
                         </div>
                     </div>
                 </div>

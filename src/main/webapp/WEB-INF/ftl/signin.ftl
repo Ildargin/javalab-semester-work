@@ -20,6 +20,8 @@
     <div class="container">
         <div class="m-auto" id="signin">
             <h1 class="auth-title text-center mb-4">Please sign in to continue</h1>
+            <h2><a href="?lang=ru">РУ</a> </h2>
+            <h2><a href="?lang=en">EN</a> </h2>
             <form action="">
                 <label>Email</label>
                 <input class="mb-2" id="email" type="email"required autocomplete="off"/>

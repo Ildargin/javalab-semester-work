@@ -11,6 +11,7 @@ import ru.itis.javalab.dto.SignupFormDto;
 import ru.itis.javalab.dto.UpdateFormDto;
 import ru.itis.javalab.models.Email;
 import ru.itis.javalab.models.User;
+import ru.itis.javalab.models.User.Status;
 import ru.itis.javalab.repositories.UsersRepository;
 import ru.itis.javalab.utils.EmailUtil;
 import ru.itis.javalab.utils.MailsGenerator;
@@ -18,17 +19,13 @@ import ru.itis.javalab.utils.MailsGenerator;
 @Service
 public class UsersServiceImpl implements UsersService {
 
-  @Autowired
-  private UsersRepository usersRepository;
+  @Autowired private UsersRepository usersRepository;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  @Autowired private PasswordEncoder passwordEncoder;
 
-  @Autowired
-  private EmailUtil emailUtil;
+  @Autowired private EmailUtil emailUtil;
 
-  @Autowired
-  private MailsGenerator mailsGenerator;
+  @Autowired private MailsGenerator mailsGenerator;
 
   @Value("${server.url}")
   private String serverUrl;
@@ -38,29 +35,39 @@ public class UsersServiceImpl implements UsersService {
 
   @Override
   public void updateUser(UpdateFormDto updateFormDto) {
-    usersRepository.update(User.builder()
-        .id(updateFormDto.getId())
-        .birthDate(updateFormDto.getBirthDate())
-        .firstName(updateFormDto.getFirstName())
-        .lastName(updateFormDto.getLastName())
-        .build()
-    );
+    usersRepository.save(
+        User.builder()
+            .id(updateFormDto.getId())
+            .birthDate(updateFormDto.getBirthDate())
+            .firstName(updateFormDto.getFirstName())
+            .lastName(updateFormDto.getLastName())
+            .build());
   }
 
   @Override
-  public void addUser(SignupFormDto signupFormDto, HttpSession session) {
-    User newUser = User.builder()
-        .password(signupFormDto.getPassword())
-        .confirmedCode(UUID.randomUUID())
-        .email(signupFormDto.getEmail())
-        .build();
+  public void addUser(SignupFormDto signupFormDto) {
+    User newUser =
+        User.builder()
+            .password(passwordEncoder.encode(signupFormDto.getPassword()))
+            .confirmedCode(UUID.randomUUID().toString())
+            .email(signupFormDto.getEmail())
+            .build();
+    usersRepository.save(newUser);
+    String confirmMail = mailsGenerator.getMailForConfirm(serverUrl, newUser.getConfirmedCode().toString());
+    Email email = new Email(from, newUser.getEmail(), "Регистрация", confirmMail);
+    emailUtil.sendMail(email);
+  }
 
-    if (usersRepository.saveUser(newUser)) {
-      session.setAttribute("authenticated", true);
-      String confirmMail = mailsGenerator.getMailForConfirm(serverUrl, newUser.getConfirmedCode().toString());
-      Email email = new Email(from, newUser.getEmail(), "Регистрация", confirmMail);
-      emailUtil.sendMail(email);
+  @Override
+  public Boolean confirmUser(String confirmCode) {
+    Optional<User> userOptional= usersRepository.findByConfirmedCode(confirmCode);
+    if (userOptional.isPresent()){
+      User user = userOptional.get();
+      user.setStatus(Status.CONFIRMED);
+      usersRepository.save(user);
+      return true;
     }
+    return false;
   }
 
   @Override
